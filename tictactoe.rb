@@ -23,7 +23,6 @@ def start_turn
 	end
 end
 		
-
 def change_turn
 
 	check_if_winner_present
@@ -37,39 +36,34 @@ def change_turn
 	puts "Changed turn to #{@player}."
 end
 
-def get_place
+def choose_place
 
-@cute_board = "\n 
-			   #{@board[0]} | #{@board[1]} | #{@board[2]}  \n
-			  ---------- \n
-			   #{@board[3]} | #{@board[4]} | #{@board[5]}  \n
-			  ---------- \n
-			   #{@board[6]} | #{@board[7]} | #{@board[8]}  "
+	@cute_board = "\n 
+				   #{@board[0]} | #{@board[1]} | #{@board[2]}  \n
+				  ---------- \n
+				   #{@board[3]} | #{@board[4]} | #{@board[5]}  \n
+				  ---------- \n
+				   #{@board[6]} | #{@board[7]} | #{@board[8]}  "
 
-	# add something to check if board is already full 
 	
-		puts "Where would you like to make your move? Please state place as an integer, 1-9. The current state of the board is: #{@cute_board}"
+	puts "Where would you like to make your move? Please state place as an integer, 1-9. The current state of the board is: #{@cute_board}"
 
-		@place = gets.chomp.to_i
+	@place = gets.chomp.to_i
 
-		intended_place = @board[@place - 1]
+	intended_place = @board[@place - 1]
 
-		unless [1,2,3,4,5,6,7,8,9].include? @place
-			puts 'Please say the position you\'d like to make your move as an integer, 1-9.'
-		
-			get_place 
+	unless [1,2,3,4,5,6,7,8,9].include? @place
+		puts 'Please say the position you\'d like to make your move as an integer, 1-9.'
+	
+		choose_place 
 
-		else
-			if intended_place == 'X' || intended_place == 'O'
-				puts 'Sorry dude, that spot\'s already taken.'
-				get_place
-			end
-
+	else
+		if intended_place == 'X' || intended_place == 'O'
+			puts 'Sorry dude, that spot\'s already taken.'
+			choose_place
 		end
 
-
-
-	# end
+	end
 
 end
 
@@ -104,14 +98,21 @@ def check_if_winner_present
 							 [@board[2],@board[4],@board[6]]
 																]
 
-	# puts "#{@cute_board}"
+	@cute_board = "\n 
+				   #{@board[0]} | #{@board[1]} | #{@board[2]}  \n
+				  ---------- \n
+				   #{@board[3]} | #{@board[4]} | #{@board[5]}  \n
+				  ---------- \n
+				   #{@board[6]} | #{@board[7]} | #{@board[8]}  "
 
 	if winning_combos.include?(@winning_sequence_one)
 		@winner_present = true
-		puts 'No more turns....Player One won the game. Wooo!'
+		puts @cute_board
+		puts 'No more turns...Player One won the game. Wooo!'
 		exit
 	elsif winning_combos.include?(@winning_sequence_two)
 		@winner_present = true
+		puts @cute_board
 		puts 'No more turns...Player Two won the game, Wooo!'
 		exit
 	else
@@ -131,14 +132,12 @@ def check_if_board_full
 			new_array.push('open')
 		end
 	end
-		
-	# puts new_array
 
 	if new_array.include? 'open'
 		@board_full = false
-		# puts 'We still got free places—play away!'
 	else
 		@board_full = true
+		puts @cute_board
 		puts 'The board is full, and the game is ova without a winner. :<'
 		exit
 	end
@@ -149,26 +148,12 @@ def tic_tac_toe
 
 	while true
 
-		# puts @board_full
-		# puts @winner_present
-
 		while @board_full == false && @winner_present == false
-			# puts @board_full
-			# puts @winner_present
 			start_turn
-			get_place
+			choose_place
 			make_move
 			change_turn
 		end
-
-		# if @winner_present
-		# 	puts 'woo'
-
-		# elsif @board_full
-		# 	puts 'boooo'
-
-		# end
-			
 
 	end
 
