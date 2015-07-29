@@ -4,6 +4,7 @@
 		 7,8,9]
 
 @board_full = false
+@winner_present = false
 
 @player = 'Player One'
 
@@ -11,6 +12,10 @@
 @winning_sequence_two = ['O','O','O']
 
 def start_turn
+	
+	check_if_winner_present
+	check_if_board_full
+
 	if @player == 'Player One'
 		puts 'It\'s time for Player One to take a turn.'
 	elsif @player == 'Player Two'
@@ -20,6 +25,10 @@ end
 		
 
 def change_turn
+
+	check_if_winner_present
+	check_if_board_full
+
 	if @player == 'Player One'
 		@player = 'Player Two'
 	elsif @player == 'Player Two'
@@ -123,11 +132,11 @@ def check_if_board_full
 		end
 	end
 		
-	puts new_array
+	# puts new_array
 
 	if new_array.include? 'open'
 		@board_full = false
-		puts 'We still got free places—play away!'
+		# puts 'We still got free places—play away!'
 	else
 		@board_full = true
 		puts 'The board is full, and the game is ova without a winner. :<'
@@ -140,32 +149,29 @@ def tic_tac_toe
 
 	while true
 
-		if @board_full == false && @winner_present == false
-			check_if_board_full
-			check_if_winner_present
-			puts board_full
-			puts winner_present
+		# puts @board_full
+		# puts @winner_present
+
+		while @board_full == false && @winner_present == false
+			# puts @board_full
+			# puts @winner_present
 			start_turn
 			get_place
 			make_move
 			change_turn
-
-		elsif @winner_present
-			puts 'woo'
-
-		elsif @board_full
-			puts 'boooo'
-
-		else
-			puts 'hmm'
-
 		end
+
+		# if @winner_present
+		# 	puts 'woo'
+
+		# elsif @board_full
+		# 	puts 'boooo'
+
+		# end
 			
 
 	end
 
 end
 
-
-check_if_board_full
-check_if_winner_present
+tic_tac_toe
