@@ -123,21 +123,15 @@ def check_if_board_full
 		end
 	end
 		
-	# puts new_array
+	puts new_array
 
 	if new_array.include? 'open'
 		@board_full = false
+		puts 'We still got free places—play away!'
 	else
 		@board_full = true
-	end
-
-	# puts @board_full
-
-	if @board_full == true
 		puts 'The board is full, and the game is ova without a winner. :<'
 		exit
-	else
-		puts 'We still got free places—play away!'
 	end
 
 end
@@ -146,20 +140,32 @@ def tic_tac_toe
 
 	while true
 
-		check_if_board_full
-		check_if_winner_present
-
-		while @board_full == false && @winner_present == false
-			# check_if_board_full
-			# check_if_winner_present
+		if @board_full == false && @winner_present == false
+			check_if_board_full
+			check_if_winner_present
+			puts board_full
+			puts winner_present
 			start_turn
 			get_place
 			make_move
 			change_turn
+
+		elsif @winner_present
+			puts 'woo'
+
+		elsif @board_full
+			puts 'boooo'
+
+		else
+			puts 'hmm'
+
 		end
+			
 
 	end
 
 end
 
-tic_tac_toe
+
+check_if_board_full
+check_if_winner_present
